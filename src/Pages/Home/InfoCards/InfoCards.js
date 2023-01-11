@@ -37,10 +37,8 @@ const InfoCards = () => {
                 cardData.map(card=><InfoCard
                 key={card.id}
                 card={card}
-                
                 ></InfoCard>)
             }
-            
         </div>
     );
 };

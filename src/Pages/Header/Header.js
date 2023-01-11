@@ -14,7 +14,7 @@ const Header = () => {
                             <li><Link to='home'>Home</Link></li>
                             <li><Link to='appointment'>Appointment</Link></li>
                             <li><Link to='login'>Login</Link></li>
-                            <li><Link to='register' className='btn-info'>Register</Link></li>
+                            <li><Link to='register'>Register</Link></li>
                            
 
                         </ul>
@@ -26,7 +26,7 @@ const Header = () => {
                         <li><Link to='home'>Home</Link></li>
                         <li><Link to='appointment'>Appointment</Link></li>
                         <li><Link to='login'>Login</Link></li>
-                        <li><Link to='register' className='btn-info'>Register</Link></li>
+                        <li><Link to='register'>Register</Link></li>
                     </ul>
                 </div>
 
