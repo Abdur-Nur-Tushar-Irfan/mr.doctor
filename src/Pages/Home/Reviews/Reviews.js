@@ -30,13 +30,12 @@ const Reviews = () => {
         <div className='mt-10'>
             <div className='flex justify-between'>
                 <div>
-                    <h5 className='text-accent font-bold'>Testominial</h5>
+                    <h5 className='text-accent font-bold'>Testomonial</h5>
                     <p className='text-3xl'>What Our Patients Says</p>
                 </div>
                 <div>
                     <figure><img className='w-20' src={quote} alt='' /></figure>
                 </div>
-
             </div>
             <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {
