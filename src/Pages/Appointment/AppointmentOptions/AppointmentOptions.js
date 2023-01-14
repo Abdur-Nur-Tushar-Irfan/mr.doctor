@@ -1,10 +1,5 @@
-import PrimaryButton from "../../../PrimaryButton/PrimaryButton";
-
-
-
-const AppointmentOptions = ({ availableAppointment }) => {
+const AppointmentOptions = ({ availableAppointment,setTreatment }) => {
     const { name, slots } = availableAppointment
-
     return (
         <div className="card shadow-xl">
             <div className="card-body">
@@ -12,7 +7,7 @@ const AppointmentOptions = ({ availableAppointment }) => {
                 <p className="text-center">{slots.length > 0 ? slots[0] : 'Try another day'}</p>
                 <p className="text-center">{slots.length} {slots.length > 1 ? 'spaces' : 'space'} available</p>
                 <div className="card-actions justify-center">
-                    <PrimaryButton>Book Now</PrimaryButton>
+                    <label onClick={()=>setTreatment(availableAppointment)} htmlFor="Booking-modal" className="border-none btn bg-gradient-to-r from-cyan-500 to-blue-500">Book Appointment</label>
                 </div>
             </div>
         </div>
