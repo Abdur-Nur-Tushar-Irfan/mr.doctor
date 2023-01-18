@@ -1,10 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { toast } from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthProvider';
 
 const Header = () => {
+    const { user, logOut } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const handleSignOut = () => {
+        logOut()
+            .then(result => {
+                toast.success('Logged Out')
+                navigate('/')
+            })
+            .catch(error => {
+                console.error(error)
+            })
+    }
     return (
         <div>
-            <div className="navbar bg-base-100">
+            <div className="navbar">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -13,9 +27,13 @@ const Header = () => {
                         <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                             <li><Link to='home'>Home</Link></li>
                             <li><Link to='appointment'>Appointment</Link></li>
-                            <li><Link to='login'>Login</Link></li>
-                            <li><Link to='register'>Register</Link></li>
-                           
+                            {user?.displayName ?
+                                <>
+                                    <li><Link to='/dashboard'>DashBoard</Link></li>
+                                    <li><button className='btn border-none bg-gradient-to-r from-cyan-500 to-blue-500 text-white' onClick={handleSignOut}>Sign Out</button></li>
+
+                                </>
+                                : <li><Link to='login' className='btn border-none bg-gradient-to-r from-cyan-500 to-blue-500 text-white'>Sign In</Link></li>}
 
                         </ul>
                     </div>
@@ -25,8 +43,14 @@ const Header = () => {
                     <ul className="menu menu-horizontal px-1">
                         <li><Link to='home'>Home</Link></li>
                         <li><Link to='appointment'>Appointment</Link></li>
-                        <li><Link to='login'>Login</Link></li>
-                        <li><Link to='register'>Register</Link></li>
+                        {user?.displayName ?
+                            <>
+                                <li><Link to='/dashboard'>DashBoard</Link></li>
+                                <li><button className='btn border-none bg-gradient-to-r from-cyan-500 to-blue-500 text-white' onClick={handleSignOut}>Sign Out</button></li>
+
+                            </>
+                            : <li ><Link to='login' className='btn border-none bg-gradient-to-r from-cyan-500 to-blue-500 text-white'>Sign In</Link></li>}
+
                     </ul>
                 </div>
 

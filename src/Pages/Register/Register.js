@@ -1,19 +1,50 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthProvider';
 
 const Register = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const { createUser, updateUserProfile } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+    const form = location.state?.from.pathname || '/'
+    //FOR HANDLE REGISTER
     const handleRegister = data => {
         console.log(data)
+        createUser(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+                navigate('/')
+                toast.success('Succesfully Registered')
+                handleUpdateUserProfile(data.name)
+
+            })
+            .catch(error => console.error(error))
+    }
+    //FOR UPDATE USER
+    const handleUpdateUserProfile = (name, email) => {
+        const profile = {
+            displayName: name,
+            email
+        }
+        updateUserProfile(profile)
+            .then(() => {
+
+            })
+            .catch(error => {
+                console.error(error)
+            })
     }
     return (
-        <div className="hero bg-base-200">
+        <div className="hero">
             <div className="hero-content flex-col lg:flex-row-reverse">
-                <div className="card flex-shrink-0 w-full border shadow-2xl" data-theme="halloween">
-                   
+                <div className="card flex-shrink-0 w-full border shadow-2xl">
+
                     <form onSubmit={handleSubmit(handleRegister)} className="card-body ">
-                    <h1 className='text-center text-3xl'>Register</h1>
+                        <h1 className='text-center text-3xl font-bold'>Register</h1>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Your Name</span>
@@ -39,7 +70,7 @@ const Register = () => {
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="text"
+                            <input type="password"
                                 {...register("password",
                                     {
                                         required: true, minLength:
@@ -50,6 +81,7 @@ const Register = () => {
                                     })}
                                 placeholder="password" className="input input-bordered" />
                             {errors.password?.type === 'required' && <p className='text-red-600 mt-2'>Password is required</p>}
+                            {errors.password && <p className='text-red-600 mt-2'>{errors.password.message}</p>}
                             <label className="label">
                                 <p className="label-text-alt">Already Login? <Link to='/login' className=' link link-hover'>Register</Link> </p>
                             </label>
