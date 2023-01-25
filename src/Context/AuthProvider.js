@@ -32,7 +32,6 @@ const AuthProvider = ({ children }) => {
     //FOR UPDATE USER
     const updateUserProfile=(profile)=>{
         return updateProfile(auth.currentUser,profile)
-
     }
     //FOR USER OBSERVER
     useEffect(() => {
@@ -52,7 +51,6 @@ const AuthProvider = ({ children }) => {
         updateUserProfile,
         loading,
         signInWithGoogle
-
     }
     return (
         <AuthContext.Provider value={authInfo}>
