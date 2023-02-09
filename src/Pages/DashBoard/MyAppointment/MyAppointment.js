@@ -34,10 +34,10 @@ const MyAppointment = () => {
                         {bookings &&
                             bookings?.map((booking, i) => <tr>
                                 <th>{i + 1}</th>
-                                <td>{booking.name}</td>
-                                <td>{booking.treatment}</td>
-                                <td>{booking.appointmentDate}</td>
-                                <td>{booking.slot}</td>
+                                <td>{booking?.name}</td>
+                                <td>{booking?.treatment}</td>
+                                <td>{booking?.appointmentDate}</td>
+                                <td>{booking?.slot}</td>
                             </tr>)
                         }
                     </tbody>

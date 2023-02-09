@@ -16,6 +16,7 @@ const DashboardLayOut = () => {
                     <ul className="menu p-4 w-80 bg-gradient-to-r from-cyan-500 to-blue-500 text-base-content">
                         <li className='text-white'><Link to='/dashboard'>My Appointment</Link></li>
                         <li className='text-white'><Link to='/dashboard/allusers'>All Users</Link></li>
+                        <li className='text-white'><Link to='/dashboard/adddoctor'>Add a Doctor</Link></li>
                      
                     </ul>
 
