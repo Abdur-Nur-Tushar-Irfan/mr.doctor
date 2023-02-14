@@ -6,13 +6,14 @@ import { AuthContext } from '../../Context/AuthProvider';
 
 const Register = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const imageHostKey=process.env.REACT_APP_imgbb_key;
     const { createUser, updateUserProfile } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
     const form = location.state?.from.pathname || '/'
     //FOR HANDLE REGISTER
     const handleRegister = data => {
-        console.log(data)
+        console.log(data.image)
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;

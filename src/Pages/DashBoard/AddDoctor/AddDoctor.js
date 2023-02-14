@@ -1,9 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
 
 const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const imageHostKey = process.env.REACT_APP_imgbb_key;
+    console.log(imageHostKey)
     const { data: appointmentsServices = [] } = useQuery({
         queryKey: ['appointsmentServices'],
         queryFn: () => fetch('http://localhost:5000/appointmentsServices')
@@ -11,7 +14,19 @@ const AddDoctor = () => {
 
     })
     const handleAddDoctor = data => {
-        console.log(data)
+        const image = data.image[0]
+        const formdata = new FormData();
+        formdata.append('image', image)
+        const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`
+        fetch(url, {
+            method: 'POST',
+            body: formdata
+        })
+            .then(res => res.json())
+            .then(img => {
+                console.log(img.data.url)
+                toast.success('Successfully add a doctor')
+            })
 
     }
     return (
@@ -42,18 +57,25 @@ const AddDoctor = () => {
                             </label>
                             <div className="form-control">
 
-                                <select 
-                                {...register('speciality')}
-                                
-                                className="select select-bordered w-full max-w-xs">
+                                <select
+                                    {...register('speciality')}
+
+                                    className="select select-bordered w-full max-w-xs">
 
                                     {
                                         appointmentsServices?.map(appointmentsService => <option>{appointmentsService?.name}</option>)
                                     }
-                                    
+
 
                                 </select>
 
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text required:">Photo</span>
+                                </label>
+                                <input type="file" {...register("image", { required: true })} placeholder="Image" className="input input-bordered" />
+                                {errors.image?.type === 'required' && <p className='text-red-700 mt-2'>Image is required</p>}
                             </div>
                             <div className="form-control mt-6">
                                 <button className="btn border-none bg-gradient-to-r from-cyan-500 to-blue-500">Add Doctor</button>
