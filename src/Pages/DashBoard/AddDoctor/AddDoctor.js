@@ -2,9 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const navigate=useNavigate()
     const imageHostKey = process.env.REACT_APP_imgbb_key;
     console.log(imageHostKey)
     const { data: appointmentsServices = [] } = useQuery({
@@ -25,7 +27,27 @@ const AddDoctor = () => {
             .then(res => res.json())
             .then(img => {
                 console.log(img.data.url)
-                toast.success('Successfully add a doctor')
+                const doctors={
+                    name:data.name,
+                    email:data.email,
+                    speciality:data.speciality,
+                    image:img.data.url
+
+                }
+                fetch(`http://localhost:5000/doctors`,{
+                    method:'POST',
+                    headers:{
+                        'content-type':'application/json'
+                    },
+                    body:JSON.stringify(doctors)
+                    
+                })
+                .then(res=>res.json())
+                .then(result=>{
+                    console.log(result)
+                    toast.success(`${data.name} succesfully added`)
+                    navigate('/dashboard/manageDoctor')
+                })
             })
 
     }
