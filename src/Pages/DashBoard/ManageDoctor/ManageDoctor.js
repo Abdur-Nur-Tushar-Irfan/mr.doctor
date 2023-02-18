@@ -7,6 +7,21 @@ const ManageDoctor = () => {
         queryFn: () => fetch('http://localhost:5000/doctors')
             .then(res => res.json())
     })
+    const handleDeleteDoctor = (doctor) => {
+        const agree = window.confirm(`Are you sure you want to delete`)
+        if (agree) {
+            fetch(`http://localhost:5000/doctors/${doctor.id}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(result => {
+                    if(result.deletedCount>0){
+                        alert(`delete successfully`)
+
+                    }
+                })
+        }
+    }
     return (
         <div className="overflow-x-auto w-full">
             <table className="table w-full">
@@ -46,7 +61,7 @@ const ManageDoctor = () => {
                             </td>
                             <td>{doctor.speciality}</td>
                             <th>
-                                <button className="btn border-none btn-xs bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500">Delete</button>
+                                <button onClick={() => handleDeleteDoctor(doctor._id)} className="btn border-none btn-xs bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500">Delete</button>
                             </th>
                         </tr>)
 
